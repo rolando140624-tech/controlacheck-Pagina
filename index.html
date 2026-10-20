@@ -1,450 +1,664 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-MX">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ControlaCheck: reloj checador desde el celular para tu negocio</title>
-<meta name="description" content="Tus empleados checan con QR y huella. Tú ves retardos, faltas y horas extra en tiempo real. Implementación $599 y $19 por empleado al mes.">
-<meta property="og:title" content="ControlaCheck: reloj checador desde el celular para tu negocio">
-<meta property="og:description" content="Tus empleados checan con QR y huella. Tú ves retardos, faltas y horas extra en tiempo real. Implementación $599 y $19 por empleado al mes.">
-<meta property="og:image" content="video/portada.jpg">
-<meta name="theme-color" content="#0f5c55">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect x=%225%22 y=%223%22 width=%2222%22 height=%2226%22 rx=%224%22 fill=%22%230f5c55%22/%3E%3Cpath d=%22M11 17l4 4 7-8%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&amp;display=swap">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Controlacheck-RL: reloj checador desde el celular para tu negocio</title>
+<meta name="description" content="Tus empleados checan con QR y huella desde su celular. Tú ves retardos, faltas y horas extra en tiempo real. Implementación $599 y $19 por empleado al mes.">
+<meta property="og:title" content="Controlacheck-RL: reloj checador desde el celular">
+<meta property="og:description" content="Controla la asistencia de tu equipo sin relojes caros ni libretas. Implementación $599 con tu primer mes incluido.">
+<meta property="og:image" content="portada.jpg">
+<meta name="theme-color" content="#102a43">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='5' y='3' width='22' height='26' rx='5' fill='%23102a43'/%3E%3Crect x='11' y='2' width='10' height='5' rx='1.5' fill='%23167d8d'/%3E%3Cpath d='M11 17l4 4 7-8' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preload" href="manrope.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-body{margin:0}
-a{color:#0f5c55}a:hover{color:#0a3f3b}
-details summary{cursor:pointer;list-style:none}
-details summary::-webkit-details-marker{display:none}
+@font-face { font-family: "Manrope"; src: url("manrope.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
+:root {
+  --navy: #102a43; --navy-dark: #0b1f33; --navy-soft: #e8eef4;
+  --primary: #167d8d; --primary-dark: #11646f; --primary-soft: #e3f1f3;
+  --paper: #f4f7fa; --surface: #ffffff; --ink: #243447; --muted: #627487; --line: #dce5ed;
+  --success: #16845b; --success-dark: #116847; --success-soft: #e5f3ec;
+  --warning: #b7791f; --warning-ink: #855810; --warning-soft: #fbf2e2;
+  --danger: #c0392b; --danger-soft: #fbe9e7;
+  --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --shadow-card: 0 1px 2px rgb(16 42 67 / .04), 0 1px 3px rgb(16 42 67 / .06);
+  --shadow-float: 0 12px 32px -12px rgb(16 42 67 / .35);
+  --radius: 14px;
+  --wrap: 1160px;
+  --gutter: clamp(20px, 5vw, 32px);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 76px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; animation: none !important; } }
+body { margin: 0; font-family: var(--font-sans); color: var(--ink); background: var(--paper); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img, svg, video { max-width: 100%; }
+a { color: var(--primary-dark); }
+h1, h2, h3 { color: var(--navy); line-height: 1.15; letter-spacing: -.02em; margin: 0; }
+p { margin: 0; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+.tabular { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; border-radius: 6px; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Botones ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 12px;
+  font: 600 16px/1 var(--font-sans); text-decoration: none; border: 1px solid transparent; cursor: pointer; transition: background-color .15s, border-color .15s, color .15s, transform .05s; white-space: nowrap; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--primary); color: #fff; box-shadow: 0 1px 2px rgb(16 42 67 / .12); }
+.btn-primary:hover { background: var(--primary-dark); color: #fff; }
+.btn-secondary { background: var(--surface); color: var(--navy); border-color: var(--line); }
+.btn-secondary:hover { border-color: var(--primary); color: var(--primary-dark); }
+.btn-wa { background: var(--success); color: #fff; }
+.btn-wa:hover { background: var(--success-dark); color: #fff; }
+.btn-sm { min-height: 40px; padding: 0 16px; font-size: 15px; border-radius: 10px; }
+.btn-lg { min-height: 56px; padding: 0 28px; font-size: 17px; }
+.btn svg { width: 20px; height: 20px; flex: none; }
+
+/* ---------- Encabezado ---------- */
+.header { position: sticky; top: 0; z-index: 40; background: rgb(255 255 255 / .92); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
+.header-bar { display: flex; align-items: center; gap: 16px; height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--navy); font-weight: 800; font-size: 19px; letter-spacing: -.02em; flex: none; }
+.brand svg { width: 30px; height: 30px; }
+.brand b { color: var(--primary-dark); font-weight: 800; }
+.nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.nav a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; padding: 8px 12px; border-radius: 8px; }
+.nav a:hover { background: var(--paper); color: var(--navy); }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.menu-btn { display: none; width: 44px; height: 44px; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; align-items: center; justify-content: center; cursor: pointer; color: var(--navy); }
+.menu-btn svg { width: 22px; height: 22px; }
+.mobile-menu { display: none; border-top: 1px solid var(--line); background: var(--surface); }
+.mobile-menu nav { display: grid; padding: 8px var(--gutter) 16px; }
+.mobile-menu a.link { display: flex; align-items: center; min-height: 48px; color: var(--ink); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--line); }
+.mobile-menu .btn { margin-top: 14px; }
+.header.open .mobile-menu { display: block; }
+@media (max-width: 900px) {
+  .nav, .header-actions .btn-secondary { display: none; }
+  .menu-btn { display: inline-flex; }
+  .header-actions { margin-left: auto; }
+}
+
+/* ---------- Hero ---------- */
+.hero { padding: clamp(40px, 7vw, 88px) 0 clamp(40px, 6vw, 72px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); align-items: center; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-dark); font-weight: 600; font-size: 14px; }
+.eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--primary); }
+.hero h1 { margin-top: 18px; font-size: clamp(30px, 3.7vw, 46px); font-weight: 800; max-width: 19ch; }
+.hero .lead { margin-top: 18px; font-size: clamp(17px, 1.6vw, 19px); color: var(--muted); max-width: 54ch; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.hero-note { margin-top: 16px; font-size: 14px; color: var(--muted); }
+.hero-note small { font-size: 12px; }
+.hero-visual { background: var(--navy); border-radius: 24px; padding: clamp(16px, 3vw, 28px); box-shadow: var(--shadow-float); }
+.hero-art { display: block; width: 100%; height: auto; }
+.trust { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 26px; font-size: 14px; font-weight: 600; color: var(--ink); }
+.trust span { display: inline-flex; align-items: center; gap: 8px; }
+.trust svg { width: 18px; height: 18px; color: var(--success); }
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero h1 { max-width: 18ch; }
+}
+@media (max-width: 480px) {
+  .hero-ctas .btn { flex: 1 1 100%; }
+}
+
+/* ---------- Secciones ---------- */
+.section { padding: clamp(56px, 8vw, 96px) 0; }
+.section.alt { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.section-head { max-width: 720px; margin-bottom: clamp(28px, 4vw, 44px); }
+.kicker { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--primary-dark); }
+.section h2 { margin-top: 10px; font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; }
+.section-head p { margin-top: 12px; color: var(--muted); }
+.grid { display: grid; gap: 16px; }
+.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 960px) { .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .cols-4, .cols-3 { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-card); }
+.section.alt .card { background: var(--paper); box-shadow: none; }
+.card h3 { font-size: 18px; font-weight: 700; }
+.card p { margin-top: 8px; color: var(--muted); font-size: 16px; }
+.icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--primary-soft); color: var(--primary-dark); margin-bottom: 14px; }
+.icon svg { width: 22px; height: 22px; }
+.step-n { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--navy); color: #fff; font-weight: 700; margin-bottom: 14px; }
+.pain h3 { display: flex; gap: 10px; align-items: flex-start; }
+.pain h3::before { content: ""; flex: none; width: 10px; height: 10px; margin-top: 7px; border-radius: 50%; background: var(--danger); }
+.card.featured, .section.alt .card.featured { background: var(--navy); border-color: var(--navy); }
+.card.featured h3 { color: #fff; }
+.card.featured p { color: rgb(255 255 255 / .82); }
+
+/* ---------- Video ---------- */
+.video-wrap { max-width: 960px; margin: 0 auto; }
+.video-wrap video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 18px; background: var(--navy); box-shadow: var(--shadow-float); }
+.video-wrap p { margin-top: 12px; text-align: center; color: var(--muted); font-size: 15px; }
+
+/* ---------- Precio ---------- */
+.pricing { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+@media (max-width: 960px) { .pricing { grid-template-columns: 1fr; } }
+.price-card { display: flex; flex-direction: column; gap: 12px; padding: 28px; border-radius: 18px; border: 1px solid var(--line); background: var(--paper); }
+.price-card.main { background: var(--navy); border-color: var(--navy); color: #fff; }
+.price-card.main .label, .price-card.main .tax { color: rgb(255 255 255 / .75); }
+.price-card .label { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--primary-dark); }
+.price { font-size: clamp(40px, 5vw, 52px); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--navy); }
+.price-card.main .price { color: #fff; }
+.price small { font-size: 16px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+.price-card.main .price small { color: rgb(255 255 255 / .75); }
+.tax { font-size: 12px; color: var(--muted); margin-top: -6px; }
+.price-card ul { margin: 4px 0 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+.badge { align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: var(--warning-soft); color: var(--warning-ink); font-size: 14px; font-weight: 700; }
+.price-card .btn { margin-top: auto; }
+.price-card.main .btn-light { background: #fff; color: var(--navy); }
+.price-card.main .btn-light:hover { background: var(--primary-soft); }
+.calc-row { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding: 12px 14px; border-radius: 12px; background: var(--surface); font-size: 15px; }
+.calc-row strong { font-size: 18px; color: var(--navy); }
+.calc-row.save { border: 1.5px solid var(--warning); flex-wrap: wrap; }
+.calc-row.save em { flex-basis: 100%; font-style: normal; font-size: 13px; font-weight: 700; color: var(--warning-ink); }
+.calc-label { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; }
+.calc-label output { font-size: 26px; font-weight: 800; color: var(--navy); }
+input[type="range"] { width: 100%; min-height: 44px; accent-color: var(--primary); }
+.fine { font-size: 12px; color: var(--muted); }
+
+/* ---------- Seguridad ---------- */
+.security { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; align-items: start; }
+@media (max-width: 900px) { .security { grid-template-columns: 1fr; gap: 24px; } }
+.checks { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; }
+.checks li { display: flex; gap: 12px; }
+.checks svg { flex: none; width: 24px; height: 24px; color: var(--success); margin-top: 2px; }
+.checks strong { color: var(--navy); }
+
+/* ---------- Preguntas ---------- */
+.faq { max-width: 820px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; font-weight: 700; color: var(--navy); font-size: 17px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; flex: none; font-size: 24px; font-weight: 500; color: var(--primary-dark); transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding: 0 0 18px; color: var(--muted); }
+
+/* ---------- Cierre y pie ---------- */
+.cta { background: var(--navy); color: #fff; text-align: center; }
+.cta h2 { color: #fff; font-size: clamp(28px, 3.6vw, 42px); margin: 0 auto; max-width: 20ch; }
+.cta p { margin: 14px auto 0; max-width: 56ch; color: rgb(255 255 255 / .82); }
+.cta .hero-ctas { justify-content: center; }
+.cta .btn-secondary { background: transparent; color: #fff; border-color: rgb(255 255 255 / .35); }
+.cta .btn-secondary:hover { border-color: #fff; color: #fff; }
+.cta .fine { color: rgb(255 255 255 / .65); margin-top: 14px; }
+.footer { background: var(--navy-dark); color: #b7c3cf; font-size: 14px; padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px)); }
+.footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 24px; justify-content: space-between; align-items: center; }
+.footer a { color: #d6dee6; text-decoration: none; }
+.footer a:hover { color: #fff; text-decoration: underline; }
+.footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+
+/* ---------- Botón flotante ---------- */
+.float-buy { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 30; box-shadow: var(--shadow-float); opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity .25s, transform .25s; border-radius: 999px; }
+.float-buy.show { opacity: 1; transform: none; pointer-events: auto; }
+
+/* Escaneo del QR en la ilustración (solo si se permite movimiento) */
+@media (prefers-reduced-motion: no-preference) { .cc-scan { animation: cc-scan 2.8s ease-in-out infinite; } }
+@keyframes cc-scan { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(124px); } }
+
+/* ---------- Ventana "Más información" ---------- */
+dialog.info { width: min(480px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); border: 0; border-radius: 20px; padding: 0; box-shadow: 0 24px 64px -16px rgb(16 42 67 / .45); color: var(--ink); }
+dialog.info::backdrop { background: rgb(11 31 51 / .55); }
+.info-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 22px 22px 0; }
+.info-head h2 { font-size: 22px; font-weight: 800; }
+.info-head p { margin-top: 6px; color: var(--muted); font-size: 15px; }
+.close-btn { flex: none; width: 44px; height: 44px; border: 0; background: var(--paper); border-radius: 10px; cursor: pointer; color: var(--navy); display: grid; place-items: center; }
+.close-btn svg { width: 20px; height: 20px; }
+.info form, .info .done { padding: 18px 22px 22px; display: grid; gap: 14px; }
+.field label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 6px; color: var(--navy); }
+.field input { width: 100%; height: 50px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; font: 500 17px var(--font-sans); color: var(--ink); background: #fff; }
+.field input::placeholder { color: var(--muted); font-weight: 400; }
+.field input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); }
+.field input[aria-invalid="true"] { border-color: var(--danger); }
+.field .hint { margin-top: 4px; font-size: 13px; color: var(--muted); }
+.consent { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.45; }
+.consent input { width: 20px; height: 20px; margin-top: 1px; accent-color: var(--primary); flex: none; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-msg { padding: 12px 14px; border-radius: 10px; font-size: 15px; background: var(--danger-soft); color: var(--danger); }
+.form-msg[hidden] { display: none; }
+.done { text-align: center; }
+.done .ok { width: 56px; height: 56px; border-radius: 50%; background: var(--success); color: #fff; display: grid; place-items: center; margin: 4px auto 0; }
+.done .ok svg { width: 28px; height: 28px; }
+.done h3 { font-size: 22px; }
+.done p { color: var(--muted); }
 </style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<div style="font-family: Manrope, 'Segoe UI', system-ui, sans-serif; color: #16211f; background: #f3f6f5; line-height: 1.5">
 
-<!-- NAV -->
-<header style="background: #ffffff; border-bottom: 1px solid #d9e1de">
-  <nav style="max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
-    <a href="#inicio" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #16211f; font-weight: 800; font-size: 22px">
-      <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="3" width="22" height="26" rx="4" fill="#0f5c55"></rect><rect x="11" y="3" width="10" height="4" rx="1" fill="#f3f6f5"></rect><path d="M11 17l4 4 7-8" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-      ControlaCheck™
+<!-- ==================== Encabezado ==================== -->
+<header class="header" id="top">
+  <div class="wrap header-bar">
+    <a class="brand" href="#top" aria-label="Controlacheck-RL, inicio">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="3" width="22" height="26" rx="5" fill="#102a43"/><rect x="11" y="2" width="10" height="5" rx="1.5" fill="#167d8d"/><path d="M11 17l4 4 7-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Controlacheck<b>-RL</b></span>
     </a>
-    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-weight: 600; font-size: 15px">
-      <a href="#como-funciona" style="color: #3d4a47; text-decoration: none">Cómo funciona</a>
-      <a href="#funciones" style="color: #3d4a47; text-decoration: none">Funciones</a>
-      <a href="#precios" style="color: #3d4a47; text-decoration: none">Precios</a>
-      <a href="#preguntas" style="color: #3d4a47; text-decoration: none">Preguntas</a>
-      <a href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20ControlaCheck." style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 12px; background: #0f5c55; color: #ffffff; text-decoration: none; font-weight: 700">Comprar</a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#funciones">Funciones</a>
+      <a href="#precio">Precio</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+    <div class="header-actions">
+      <button type="button" class="btn btn-secondary btn-sm" data-open-info>Más información</button>
+      <a class="btn btn-primary btn-sm" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">Comprar</a>
+      <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path class="i-open" d="M4 7h16M4 12h16M4 17h16"/><path class="i-close" d="M6 6l12 12M18 6L6 18" style="display:none"/></svg>
+      </button>
     </div>
-  </nav>
+  </div>
+  <div class="mobile-menu" id="menu-movil">
+    <nav aria-label="Principal (móvil)">
+      <a class="link" href="#como-funciona">Cómo funciona</a>
+      <a class="link" href="#funciones">Funciones</a>
+      <a class="link" href="#precio">Precio</a>
+      <a class="link" href="#preguntas">Preguntas</a>
+      <button type="button" class="btn btn-secondary" data-open-info>Más información</button>
+    </nav>
+  </div>
 </header>
 
-<!-- HERO -->
-<section id="inicio" style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
-  <div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
-    <p style="margin: 0; display: inline-flex; align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: #e1efec; color: #0f5c55; font-weight: 700; font-size: 14px">Reloj checador desde el celular</p>
-    <h1 style="margin: 0; font-size: clamp(38px, 5vw, 60px); line-height: 1.05; font-weight: 800; letter-spacing: -1.5px">Controla la asistencia de tu equipo sin relojes caros ni libretas.</h1>
-    <p style="margin: 0; font-size: 20px; color: #4a5754; max-width: 560px">Para pequeños negocios, emprendedores y empresas de cualquier tamaño. Tus empleados checan con un QR y su huella; tú ves retardos, faltas y horas extra en tiempo real, con el reporte listo para tu nómina.</p>
-    <div style="display: flex; flex-wrap: wrap; gap: 12px">
-      <a href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20ControlaCheck." style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 28px; border-radius: 14px; background: #1f7a46; color: #ffffff; text-decoration: none; font-weight: 800; font-size: 18px">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"></path></svg>
-        Comprar por $599
-      </a>
-      <a href="#video" style="display: inline-flex; align-items: center; gap: 8px; min-height: 56px; padding: 0 24px; border-radius: 14px; border: 2px solid #c8d3cf; color: #16211f; text-decoration: none; font-weight: 700; font-size: 17px; background: #ffffff"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>Ver el video</a>
-    </div>
-    <p style="margin: 0; font-size: 15px; color: #4a5754">Implementación de $599, pago único, con tu primer mes incluido. Después, $19 por empleado al mes. <span style="font-size: 12px">IVA no incluido.</span></p>
-  </div>
-
-  <!-- Visual: celular + tarjeta del dashboard -->
-  <div style="flex: 1 1 420px; min-width: 0; display: flex; justify-content: center">
-    <div style="position: relative; width: 300px; max-width: 100%">
-      <div style="width: 280px; height: 570px; border-radius: 44px; background: #101716; padding: 12px; box-sizing: border-box">
-        <div style="height: 100%; border-radius: 34px; background: #f3f6f5; padding: 40px 20px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
-          <p style="margin: 0; font-size: 22px; font-weight: 800">Hola, Juan</p>
-          <p style="margin: -10px 0 0; font-size: 13px; color: #4a5754">Sucursal Nuevo Laredo</p>
-          <div style="margin-top: 20px; border-radius: 22px; background: #0f5c55; color: #ffffff; text-align: center; padding: 34px 12px">
-            <p style="margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 2px">ENTRADA REGISTRADA</p>
-            <p style="margin: 6px 0; font-size: 56px; font-weight: 800; letter-spacing: -2px; line-height: 1">07:58</p>
-            <p style="margin: 0; font-size: 13px; opacity: 0.85">Confirmada con huella</p>
-          </div>
-          <div style="margin-top: auto; height: 56px; border-radius: 16px; background: #2e3a5c; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700">Registrar salida</div>
-        </div>
+<main>
+<!-- ==================== Hero ==================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Reloj checador desde el celular</span>
+      <h1>Controla la asistencia de tu equipo sin relojes caros ni libretas.</h1>
+      <p class="lead">Para pequeños negocios, emprendedores y empresas de cualquier tamaño. Tus empleados checan con un QR y su huella; tú ves retardos, faltas y horas extra en tiempo real, con el reporte listo para tu nómina.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary btn-lg" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
+          Comprar por $599
+        </a>
+        <button type="button" class="btn btn-secondary btn-lg" data-open-info>Más información</button>
       </div>
-      <div style="position: absolute; right: -16px; bottom: -64px; width: 214px; background: #ffffff; border-radius: 20px; padding: 18px; box-shadow: 0 24px 48px -16px rgba(15,92,85,0.35); display: flex; flex-direction: column; gap: 12px">
-        <p style="margin: 0; font-size: 14px; font-weight: 800">Asistencia de hoy</p>
-        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
-          <div style="background: #e1efec; border-radius: 12px; padding: 10px"><p style="margin: 0; font-size: 11px; color: #0f5c55; font-weight: 700">Presentes</p><p style="margin: 0; font-size: 26px; font-weight: 800">42</p></div>
-          <div style="background: #fbf1d6; border-radius: 12px; padding: 10px"><p style="margin: 0; font-size: 11px; color: #6b4e08; font-weight: 700">Retardos</p><p style="margin: 0; font-size: 26px; font-weight: 800">3</p></div>
-          <div style="background: #f6e1e1; border-radius: 12px; padding: 10px"><p style="margin: 0; font-size: 11px; color: #9a2f2f; font-weight: 700">Faltas</p><p style="margin: 0; font-size: 26px; font-weight: 800">1</p></div>
-          <div style="background: #e4e7f0; border-radius: 12px; padding: 10px"><p style="margin: 0; font-size: 11px; color: #2e3a5c; font-weight: 700">Horas extra</p><p style="margin: 0; font-size: 26px; font-weight: 800">18:32</p></div>
-        </div>
-        <p style="margin: 0; font-size: 11px; color: #4a5754">Ejemplo ilustrativo</p>
+      <p class="hero-note">Implementación de $599, pago único, con tu primer mes incluido. Después, $19 por empleado al mes. <small>IVA no incluido.</small> <a href="#video">Ver el video de 38 segundos</a></p>
+      <div class="trust" aria-label="Ventajas">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Sin comprar aparatos</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Android y iPhone</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Instalación incluida</span>
       </div>
     </div>
+    <div class="hero-visual"><svg viewBox="0 0 520 360" class="hero-art" role="img" aria-label="Un empleado con uniforme escanea con su celular el código QR de su sucursal, confirma con la huella en su celular y queda registrada su entrada." style="font-family:var(--font-sans)"><circle cx="300" cy="190" r="170" fill="#ffffff" opacity="0.035"></circle><circle cx="300" cy="190" r="115" fill="#ffffff" opacity="0.035"></circle><g><rect x="24" y="34" width="174" height="240" rx="14" fill="#ffffff"></rect><circle cx="34" cy="44" r="3" fill="#dce5ed"></circle><circle cx="188" cy="44" r="3" fill="#dce5ed"></circle><circle cx="34" cy="264" r="3" fill="#dce5ed"></circle><circle cx="188" cy="264" r="3" fill="#dce5ed"></circle><g transform="translate(40 48) scale(1)"><rect x="0" y="2" width="16" height="19" rx="4" fill="#102a43"></rect><rect x="4" y="0" width="8" height="4.5" rx="1.5" fill="#167d8d"></rect><path d="M3.5 11.5l3 3 5.5-6.5" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></g><text x="61" y="64" font-size="13.5" font-weight="800" fill="#102a43">Controlacheck<tspan fill="#167d8d">-RL</tspan></text><rect x="61" y="70" width="117" height="2.5" rx="1.25" fill="#167d8d"></rect><g><rect x="52" y="86" width="37.800000000000004" height="37.800000000000004" rx="6.48" fill="#102a43"></rect><rect x="57.4" y="91.4" width="27" height="27" rx="4.32" fill="#ffffff"></rect><rect x="62.8" y="96.8" width="16.200000000000003" height="16.200000000000003" rx="2.7" fill="#102a43"></rect></g><g><rect x="127.60000000000001" y="86" width="37.800000000000004" height="37.800000000000004" rx="6.48" fill="#102a43"></rect><rect x="133" y="91.4" width="27" height="27" rx="4.32" fill="#ffffff"></rect><rect x="138.4" y="96.8" width="16.200000000000003" height="16.200000000000003" rx="2.7" fill="#102a43"></rect></g><g><rect x="52" y="161.60000000000002" width="37.800000000000004" height="37.800000000000004" rx="6.48" fill="#102a43"></rect><rect x="57.4" y="167.00000000000003" width="27" height="27" rx="4.32" fill="#ffffff"></rect><rect x="62.8" y="172.40000000000003" width="16.200000000000003" height="16.200000000000003" rx="2.7" fill="#102a43"></rect></g><rect x="101.1" y="86.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="86.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="86.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="122.7" y="86.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="90.30000000000001" y="91.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="91.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="90.30000000000001" y="97.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="97.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="97.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="97.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="122.7" y="97.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="102.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="102.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="102.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="108.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="108.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="108.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="117.30000000000001" y="108.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="90.30000000000001" y="113.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="113.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="118.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="52.5" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="63.3" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="68.7" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="79.5" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="84.9" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="155.10000000000002" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="160.5" y="124.30000000000001" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="52.5" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="68.7" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="74.1" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="79.5" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="122.7" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="133.5" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="155.10000000000002" y="129.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="68.7" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="117.30000000000001" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="122.7" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="149.7" y="135.1" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="63.3" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="68.7" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="74.1" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="84.9" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="122.7" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="149.7" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="160.5" y="140.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="52.5" y="145.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="79.5" y="145.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="84.9" y="145.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="145.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="145.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="145.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="145.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="133.5" y="145.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="52.5" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="68.7" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="74.1" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="90.30000000000001" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="133.5" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="151.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="52.5" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="57.9" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="63.3" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="68.7" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="74.1" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="84.9" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="133.5" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="155.10000000000002" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="160.5" y="156.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="162.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="162.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="133.5" y="162.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="162.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="149.7" y="162.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="155.10000000000002" y="162.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="160.5" y="162.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="90.30000000000001" y="167.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="167.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="167.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="122.7" y="167.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="167.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="167.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="160.5" y="167.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="117.30000000000001" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="133.5" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="149.7" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="155.10000000000002" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="160.5" y="172.9" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="90.30000000000001" y="178.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="178.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="149.7" y="178.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="155.10000000000002" y="178.3" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="183.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="183.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="122.7" y="183.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="133.5" y="183.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="183.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="160.5" y="183.7" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="90.30000000000001" y="189.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="189.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="106.5" y="189.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="189.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="189.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="189.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="160.5" y="189.10000000000002" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="95.7" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="101.1" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="111.9" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="117.30000000000001" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="122.7" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="128.10000000000002" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="133.5" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="138.9" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="144.3" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><rect x="155.10000000000002" y="194.5" width="4.4" height="4.4" rx="1" fill="#102a43"></rect><g class="cc-scan"><rect x="46" y="84" width="125.4" height="3" rx="1.5" fill="#167d8d"></rect><rect x="46" y="78" width="125.4" height="14" fill="#167d8d" opacity="0.12"></rect></g><path d="M24 214 H198 V260 a14 14 0 0 1 -14 14 H38 a14 14 0 0 1 -14 -14 Z" fill="#102a43"></path><text x="111" y="238" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Escanea el código</text><text x="111" y="254" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">para registrar tu entrada</text></g><path d="M262 112 L 172 96 M262 112 L 172 196" stroke="#8fd3dc" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round" opacity="0.65"></path><g><path d="M352 360 C 350 286, 366 228, 412 210 C 438 200, 470 202, 496 214 C 512 222, 520 240, 520 260 V 360 Z" fill="#1f3b5c"></path><path d="M357 300 C 400 290, 470 286, 520 292 V 306 C 470 300, 402 304, 356 314 Z" fill="#c9d3dd" opacity="0.85"></path><path d="M424 168 h30 v38 c-10 6 -20 6 -30 0 Z" fill="#a5714d"></path><path d="M414 206 C 428 196, 452 196, 466 204 L 470 214 C 452 206, 430 206, 412 214 Z" fill="#17304c"></path><ellipse cx="440" cy="128" rx="36" ry="40" fill="#1f2328"></ellipse><path d="M405 120 C 402 146, 410 164, 426 172 L 432 150 Z" fill="#c08a63"></path><ellipse cx="420" cy="138" rx="7" ry="10" fill="#a5714d"></ellipse><path d="M402 112 C 404 76, 476 72, 478 112 C 456 104, 424 104, 402 112 Z" fill="#102a43"></path><path d="M406 110 C 390 110, 372 114, 362 120 C 378 124, 396 122, 410 116 Z" fill="#0b1f33"></path><circle cx="440" cy="80" r="3" fill="#0b1f33"></circle><path d="M398 232 C 372 250, 330 268, 304 268" fill="none" stroke="#1f3b5c" stroke-width="40" stroke-linecap="round"></path><ellipse cx="280" cy="252" rx="26" ry="30" fill="#c08a63"></ellipse></g><g transform="translate(220 92) rotate(-6)"><rect x="0" y="0" width="112" height="206" rx="18" fill="#0b1f33" stroke="#2a4a6b" stroke-width="2"></rect><rect x="6" y="7" width="100" height="192" rx="13" fill="#ffffff"></rect><rect x="40" y="12" width="32" height="7" rx="3.5" fill="#0b1f33"></rect><g transform="translate(16 27) scale(0.62)"><rect x="0" y="2" width="16" height="19" rx="4" fill="#102a43"></rect><rect x="4" y="0" width="8" height="4.5" rx="1.5" fill="#167d8d"></rect><path d="M3.5 11.5l3 3 5.5-6.5" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></g><text x="29" y="38" font-size="8.4" font-weight="800" fill="#102a43">Controlacheck<tspan fill="#167d8d">-RL</tspan></text><circle cx="56" cy="66" r="15" fill="#16845b"></circle><path d="M49 66.5l5 5 9-10" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path><text x="56" y="96" font-size="10.5" font-weight="800" fill="#102a43" text-anchor="middle">Entrada registrada</text><text x="56" y="114" font-size="15" font-weight="800" fill="#102a43" text-anchor="middle">07:58 a. m.</text><text x="56" y="126" font-size="7" fill="#627487" text-anchor="middle">Lunes, 19 de octubre</text><rect x="14" y="133" width="84" height="1" fill="#dce5ed"></rect><path d="M20 141 c0-3 2.4-5 5-5 s5 2 5 5 c0 3.6-5 8-5 8 s-5-4.4-5-8z" fill="#167d8d"></path><circle cx="25" cy="141" r="1.6" fill="#ffffff"></circle><text x="35" y="144" font-size="8" font-weight="700" fill="#102a43">Sucursal Matriz</text><rect x="11" y="158" width="90" height="28" rx="14" fill="#e5f3ec"></rect><g fill="none" stroke="#16845b" stroke-width="1.5" stroke-linecap="round" transform="translate(16 163) scale(0.8)"><path d="M12 11c0 3-1 6-3 8"></path><path d="M8.5 7.5a4.5 4.5 0 0 1 8 2.8c0 2.4-.4 4.6-1.2 6.7"></path><path d="M5.6 9.2A7 7 0 0 1 19 10c0 2.2-.3 4.3-.8 6.3"></path><path d="M15.5 11c0 3.3-.8 6.3-2.3 9"></path><path d="M8.6 11.2c0 2-.5 3.9-1.4 5.6"></path></g><text x="37" y="175" font-size="7" font-weight="800" fill="#116847">Huella confirmada</text></g><g fill="#c08a63"><rect x="339" y="184" width="19" height="12" rx="6" transform="rotate(-6 339 184)"></rect><rect x="341" y="202" width="19" height="12" rx="6" transform="rotate(-6 341 202)"></rect><rect x="343" y="220" width="18" height="12" rx="6" transform="rotate(-6 343 220)"></rect><rect x="345" y="238" width="16" height="11" rx="5.5" transform="rotate(-6 345 238)"></rect></g><ellipse cx="232" cy="254" rx="8" ry="15" fill="#a5714d" transform="rotate(-6 232 254)"></ellipse><g transform="translate(246 318)"><rect width="178" height="32" rx="16" fill="#ffffff"></rect><circle cx="18" cy="16" r="5" fill="#16845b"></circle><text x="31" y="20.5" font-size="11.5" font-weight="700" fill="#102a43">Juan Pérez · Presente</text></g></svg></div>
   </div>
 </section>
 
-<!-- VIDEO -->
-<section id="video" style="max-width: 1040px; margin: 0 auto; padding: 0 24px 72px; display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center">
-  <h2 style="margin: 0; font-size: clamp(26px, 3vw, 36px); font-weight: 800; letter-spacing: -1px">Míralo funcionar en 38 segundos</h2>
-  <video poster="video/portada.jpg" controls playsinline preload="metadata" aria-label="Video: cómo funciona ControlaCheck" style="display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 24px; background: #0a3f3b; box-shadow: 0 30px 60px -24px rgba(15,92,85,0.45)"><source src="video/controlacheck.mp4" type="video/mp4"><source src="video/controlacheck.webm" type="video/webm"></video>
-  <p style="margin: 0; color: #4a5754">Activa el sonido. Tus empleados checan con QR y huella; tú ves todo en tiempo real.</p>
-</section>
-
-<!-- PROBLEMA -->
-<section style="background: #ffffff; border-top: 1px solid #d9e1de; border-bottom: 1px solid #d9e1de">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 64px 24px; display: flex; flex-direction: column; gap: 32px">
-    <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; letter-spacing: -1px; max-width: 760px">¿Te suena familiar?</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px">
-      <div style="flex: 1 1 280px; padding: 28px; border-radius: 20px; background: #f3f6f5; display: flex; flex-direction: column; gap: 10px">
-        <p style="margin: 0; font-size: 20px; font-weight: 800">La libreta o el Excel nadie los revisa</p>
-        <p style="margin: 0; color: #4a5754">Se firman horas de memoria y al final del mes nadie sabe quién llegó tarde.</p>
-      </div>
-      <div style="flex: 1 1 280px; padding: 28px; border-radius: 20px; background: #f3f6f5; display: flex; flex-direction: column; gap: 10px">
-        <p style="margin: 0; font-size: 20px; font-weight: 800">Horas extra que nadie autorizó</p>
-        <p style="margin: 0; color: #4a5754">Se pagan tiempos que no se trabajaron o que no se aprobaron, y nadie lo nota a tiempo.</p>
-      </div>
-      <div style="flex: 1 1 280px; padding: 28px; border-radius: 20px; background: #f3f6f5; display: flex; flex-direction: column; gap: 10px">
-        <p style="margin: 0; font-size: 20px; font-weight: 800">El cierre de nómina, a mano</p>
-        <p style="margin: 0; color: #4a5754">Cada quincena se capturan retardos, faltas e incidencias uno por uno.</p>
-      </div>
+<!-- ==================== Video ==================== -->
+<section class="section alt" id="video" aria-labelledby="t-video">
+  <div class="wrap">
+    <div class="section-head" style="margin-inline:auto;text-align:center">
+      <p class="kicker">En 38 segundos</p>
+      <h2 id="t-video">Míralo funcionar</h2>
+    </div>
+    <div class="video-wrap">
+      <video poster="portada.jpg" controls playsinline preload="metadata" aria-label="Video: cómo funciona Controlacheck-RL">
+        <source src="controlacheck.mp4" type="video/mp4">
+        <source src="video/controlacheck.mp4" type="video/mp4">
+        <source src="controlacheck.webm" type="video/webm">
+        <source src="video/controlacheck.webm" type="video/webm">
+        <p>Tu navegador no puede reproducir el video. <a href="controlacheck.mp4">Descárgalo aquí</a>.</p>
+      </video>
+      <p>Activa el sonido. Tus empleados checan con QR y huella; tú ves todo en tiempo real.</p>
     </div>
   </div>
 </section>
 
-<!-- CÓMO FUNCIONA -->
-<section id="como-funciona" style="max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 40px">
-  <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px">
-    <p style="margin: 0; color: #0f5c55; font-weight: 800; font-size: 15px">CÓMO FUNCIONA</p>
-    <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; letter-spacing: -1px">Listo en cuatro pasos, sin comprar equipo</h2>
-  </div>
-  <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 20px">
-    <li style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 12px; padding: 28px; border-radius: 20px; background: #ffffff; border: 1px solid #d9e1de">
-      <span style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: #0f5c55; color: #ffffff; font-weight: 800; font-size: 20px">1</span>
-      <p style="margin: 0; font-size: 19px; font-weight: 800">Imprime el QR de tu sucursal</p>
-      <p style="margin: 0; color: #4a5754">Cada sucursal tiene su propio código. Lo pegas en la entrada.</p>
-    </li>
-    <li style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 12px; padding: 28px; border-radius: 20px; background: #ffffff; border: 1px solid #d9e1de">
-      <span style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: #0f5c55; color: #ffffff; font-weight: 800; font-size: 20px">2</span>
-      <p style="margin: 0; font-size: 19px; font-weight: 800">Tus empleados checan con su celular</p>
-      <p style="margin: 0; color: #4a5754">Escanean el QR y confirman con su huella o Face ID.</p>
-    </li>
-    <li style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 12px; padding: 28px; border-radius: 20px; background: #ffffff; border: 1px solid #d9e1de">
-      <span style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: #0f5c55; color: #ffffff; font-weight: 800; font-size: 20px">3</span>
-      <p style="margin: 0; font-size: 19px; font-weight: 800">Tú lo ves en tiempo real</p>
-      <p style="margin: 0; color: #4a5754">Presentes, retardos, faltas y horas extra, desde tu celular o computadora.</p>
-    </li>
-    <li style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 12px; padding: 28px; border-radius: 20px; background: #ffffff; border: 1px solid #d9e1de">
-      <span style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: #0f5c55; color: #ffffff; font-weight: 800; font-size: 20px">4</span>
-      <p style="margin: 0; font-size: 19px; font-weight: 800">Descargas el reporte para nómina</p>
-      <p style="margin: 0; color: #4a5754">Diario o mensual, en Excel, PDF, CSV o TXT.</p>
-    </li>
-  </ol>
-</section>
-
-<!-- FUNCIONES -->
-<section id="funciones" style="background: #ffffff; border-top: 1px solid #d9e1de; border-bottom: 1px solid #d9e1de">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 40px">
-    <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px">
-      <p style="margin: 0; color: #0f5c55; font-weight: 800; font-size: 15px">FUNCIONES</p>
-      <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; letter-spacing: -1px">Todo lo que necesitas para controlar la asistencia</h2>
+<!-- ==================== Problema ==================== -->
+<section class="section" aria-labelledby="t-problema">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">El problema</p>
+      <h2 id="t-problema">¿Te suena familiar?</h2>
     </div>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px">
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">QR por sucursal</p>
-            <p style="margin: 0; color: #4a5754">Cada sucursal con su propio código. Si alguien lo comparte, lo reemplazas en un clic.</p>
-          </div>
-        </div>
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">Huella o Face ID</p>
-            <p style="margin: 0; color: #4a5754">El empleado confirma con la biometría de su celular. Nadie checa por otro.</p>
-          </div>
-        </div>
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">Retardos, faltas y horas extra</p>
-            <p style="margin: 0; color: #4a5754">Se calculan solos según el horario, la tolerancia y la comida de cada empleado.</p>
-          </div>
-        </div>
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">Horarios y turnos</p>
-            <p style="margin: 0; color: #4a5754">Varios horarios, turnos nocturnos y redondeo de horas extra.</p>
-          </div>
-        </div>
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">Home office</p>
-            <p style="margin: 0; color: #4a5754">Autoriza a quien trabaja desde casa: checa sin QR y queda marcado como home office.</p>
-          </div>
-        </div>
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">Avisos por WhatsApp</p>
-            <p style="margin: 0; color: #4a5754">Avisa al empleado de un retardo o falta con el mensaje ya escrito.</p>
-          </div>
-        </div>
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">Incidencias</p>
-            <p style="margin: 0; color: #4a5754">Permisos, vacaciones, incapacidades y salidas olvidadas, con aprobación.</p>
-          </div>
-        </div>
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">Reportes para nómina</p>
-            <p style="margin: 0; color: #4a5754">Diario y mensual en Excel, PDF, CSV o TXT.</p>
-          </div>
-        </div>
-      
-        <div style="flex: 1 1 300px; display: flex; gap: 16px; padding: 24px; border-radius: 20px; background: #f3f6f5">
-          <span style="flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e1efec; color: #0f5c55">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>
-          </span>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; font-size: 18px; font-weight: 800">Funciona en cualquier celular</p>
-            <p style="margin: 0; color: #4a5754">Se instala como app en Android y iPhone. Sin equipo adicional.</p>
-          </div>
-        </div>
-      
+    <div class="grid cols-3">
+      <article class="card pain"><h3>La libreta o el Excel nadie los revisa</h3><p>Se firman horas de memoria y al final del mes nadie sabe quién llegó tarde.</p></article>
+      <article class="card pain"><h3>Horas extra que nadie autorizó</h3><p>Se pagan tiempos que no se trabajaron o que no se aprobaron, y nadie lo nota a tiempo.</p></article>
+      <article class="card pain"><h3>El cierre de nómina, a mano</h3><p>Cada quincena se capturan retardos, faltas e incidencias uno por uno.</p></article>
     </div>
   </div>
 </section>
 
-<!-- PARA QUIÉN -->
-<section style="max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 32px">
-  <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; letter-spacing: -1px">Para cualquier negocio, desde un empleado</h2>
-  <div style="display: flex; flex-wrap: wrap; gap: 16px">
-    <div style="flex: 1 1 240px; padding: 24px; border-radius: 20px; background: #ffffff; border: 1px solid #d9e1de"><p style="margin: 0 0 6px; font-size: 18px; font-weight: 800">Pequeños negocios</p><p style="margin: 0; color: #4a5754">Tienda, consultorio, restaurante o taller: sabes a qué hora llega cada quien sin estar ahí.</p></div>
-    <div style="flex: 1 1 240px; padding: 24px; border-radius: 20px; background: #ffffff; border: 1px solid #d9e1de"><p style="margin: 0 0 6px; font-size: 18px; font-weight: 800">Emprendedores</p><p style="margin: 0; color: #4a5754">Tu primer equipo con orden desde el inicio, pagando solo por los empleados que tienes.</p></div>
-    <div style="flex: 1 1 240px; padding: 24px; border-radius: 20px; background: #ffffff; border: 1px solid #d9e1de"><p style="margin: 0 0 6px; font-size: 18px; font-weight: 800">Pymes</p><p style="margin: 0; color: #4a5754">Horarios, turnos, incidencias y reportes para la nómina, sin capturar a mano.</p></div>
-    <div style="flex: 1 1 240px; padding: 24px; border-radius: 20px; background: #0f5c55; color: #ffffff"><p style="margin: 0 0 6px; font-size: 18px; font-weight: 800">Empresas con sucursales</p><p style="margin: 0; opacity: 0.9">Un QR por sucursal y un solo panel para ver a todo tu personal.</p></div>
+<!-- ==================== Cómo funciona ==================== -->
+<section class="section alt" id="como-funciona" aria-labelledby="t-como">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Cómo funciona</p>
+      <h2 id="t-como">Listo en cuatro pasos, sin comprar equipo</h2>
+    </div>
+    <ol class="grid cols-4" style="list-style:none;margin:0;padding:0">
+      <li class="card"><span class="step-n">1</span><h3>Imprime el QR de tu sucursal</h3><p>Cada sucursal tiene su propio código. Lo pegas en la entrada.</p></li>
+      <li class="card"><span class="step-n">2</span><h3>Tus empleados checan con su celular</h3><p>Escanean el QR y confirman con su huella o Face ID.</p></li>
+      <li class="card"><span class="step-n">3</span><h3>Tú lo ves en tiempo real</h3><p>Presentes, retardos, faltas y horas extra, desde tu celular o computadora.</p></li>
+      <li class="card"><span class="step-n">4</span><h3>Descargas el reporte para nómina</h3><p>Diario o mensual, en Excel, PDF, CSV o TXT.</p></li>
+    </ol>
   </div>
 </section>
 
-<!-- PRECIOS -->
-<section id="precios" style="background: #ffffff; border-top: 1px solid #d9e1de; border-bottom: 1px solid #d9e1de">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 40px">
-    <div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
-      <p style="margin: 0; color: #0f5c55; font-weight: 800; font-size: 15px">PRECIO</p>
-      <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; letter-spacing: -1px">Un precio simple: pagas solo por los empleados que tienes</h2>
+<!-- ==================== Funciones ==================== -->
+<section class="section" id="funciones" aria-labelledby="t-funciones">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Funciones</p>
+      <h2 id="t-funciones">Todo lo que necesitas para controlar la asistencia</h2>
     </div>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px">
-      <div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px; padding: 32px; border-radius: 22px; background: #0f5c55; color: #ffffff">
-        <p style="margin: 0; font-size: 15px; font-weight: 800; letter-spacing: 1px">IMPLEMENTACIÓN</p>
-        <p style="margin: 0; font-size: 56px; font-weight: 800; letter-spacing: -2px; line-height: 1">$599<span style="font-size: 17px; font-weight: 600; letter-spacing: 0; opacity: 0.85"> pago único</span></p>
-        <p style="margin: -6px 0 0; font-size: 12px; opacity: 0.8">IVA no incluido</p>
-        <p style="margin: 0; font-size: 18px; font-weight: 700; color: #f2cf6e">Incluye tu primer mes de uso</p>
-        <ul style="margin: 4px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; opacity: 0.95">
+    <div class="grid cols-3">
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M20 20h-3v-3M14 20h.01"/></svg></span><h3>QR por sucursal</h3><p>Cada sucursal con su propio código. Si alguien lo comparte, lo reemplazas en un clic.</p></article>
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11c0 3-1 6-3 8"/><path d="M8.5 7.5a4.5 4.5 0 0 1 8 2.8c0 2.4-.4 4.6-1.2 6.7"/><path d="M5.6 9.2A7 7 0 0 1 19 10c0 2.2-.3 4.3-.8 6.3"/><path d="M15.5 11c0 3.3-.8 6.3-2.3 9"/></svg></span><h3>Huella o Face ID</h3><p>El empleado confirma con la biometría de su celular. Nadie checa por otro.</p></article>
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h3>Retardos, faltas y horas extra</h3><p>Se calculan solos según el horario, la tolerancia y la comida de cada empleado.</p></article>
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><h3>Horarios y turnos</h3><p>Varios horarios, turnos nocturnos y redondeo de horas extra.</p></article>
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><h3>Home office</h3><p>Autoriza a quien trabaja desde casa: checa sin QR y queda marcado como home office.</p></article>
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/><path d="M9 9.5c.3 2.4 2.1 4.2 4.5 4.5l1-1.2 1.8.8c-.3 1.2-1.3 1.9-2.5 1.7A6 6 0 0 1 8.4 10.2c-.2-1.2.5-2.2 1.7-2.5l.8 1.8z"/></svg></span><h3>Avisos por WhatsApp</h3><p>Avisa al empleado de un retardo o falta con el mensaje ya escrito.</p></article>
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span><h3>Incidencias</h3><p>Permisos, vacaciones, incapacidades y salidas olvidadas, con aprobación.</p></article>
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><h3>Reportes para nómina</h3><p>Diario y mensual en Excel, PDF, CSV o TXT.</p></article>
+      <article class="card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><h3>Funciona en cualquier celular</h3><p>Se instala como app en Android y iPhone. Sin equipo adicional.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Para quién ==================== -->
+<section class="section alt" aria-labelledby="t-quien">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Para quién</p>
+      <h2 id="t-quien">Para cualquier negocio, desde un empleado</h2>
+    </div>
+    <div class="grid cols-4">
+      <article class="card"><h3>Pequeños negocios</h3><p>Tienda, consultorio, restaurante o taller: sabes a qué hora llega cada quien sin estar ahí.</p></article>
+      <article class="card"><h3>Emprendedores</h3><p>Tu primer equipo con orden desde el inicio, pagando solo por los empleados que tienes.</p></article>
+      <article class="card"><h3>Pymes</h3><p>Horarios, turnos, incidencias y reportes para la nómina, sin capturar a mano.</p></article>
+      <article class="card featured"><h3>Empresas con sucursales</h3><p>Un QR por sucursal y un solo panel para ver a todo tu personal.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Precio ==================== -->
+<section class="section" id="precio" aria-labelledby="t-precio">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Precio</p>
+      <h2 id="t-precio">Un precio simple: pagas solo por los empleados que tienes</h2>
+    </div>
+    <div class="pricing">
+      <article class="price-card main">
+        <p class="label">Implementación</p>
+        <p class="price">$599 <small>pago único</small></p>
+        <p class="tax">IVA no incluido</p>
+        <p style="font-weight:700;color:#f2cf6e">Incluye tu primer mes de uso</p>
+        <ul>
           <li>Configuración de tu empresa, sucursales y horarios</li>
           <li>Tu código QR listo para imprimir</li>
           <li>Alta de tu equipo y primera checada juntos</li>
         </ul>
-        <a href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20ControlaCheck." style="margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; border-radius: 14px; background: #ffffff; color: #0a3f3b; text-decoration: none; font-weight: 800; font-size: 17px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#1f7a46" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"></path></svg>
-          Comprar
-        </a>
-      </div>
-      <div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px; padding: 32px; border-radius: 22px; border: 2px solid #0f5c55; background: #f3faf8">
-        <p style="margin: 0; font-size: 15px; font-weight: 800; letter-spacing: 1px; color: #0f5c55">DESDE EL SEGUNDO MES</p>
-        <p style="margin: 0; font-size: 56px; font-weight: 800; letter-spacing: -2px; line-height: 1">$19<span style="font-size: 17px; font-weight: 600; letter-spacing: 0; color: #4a5754"> por empleado al mes</span></p>
-        <p style="margin: -6px 0 0; font-size: 12px; color: #4a5754">IVA no incluido</p>
-        <p style="margin: 0; font-size: 18px; font-weight: 700">Todas las funciones incluidas</p>
-        <p style="margin: 0; display: inline-flex; align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #fbf1d6; color: #6b4e08; font-size: 14px; font-weight: 700">10% de descuento al pagar el año completo</p>
-        <p style="margin: 0; color: #4a5754">QR, huella o Face ID, cálculo de retardos y horas extra, home office, avisos por WhatsApp y reportes para nómina.</p>
-      </div>
-      <div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 16px; padding: 32px; border-radius: 22px; background: #f3f6f5">
-        <p style="margin: 0; font-size: 15px; font-weight: 800; letter-spacing: 1px; color: #0f5c55">CALCULA TU COSTO</p>
-        <label for="emp-range" style="font-size: 18px; font-weight: 700">Empleados: <span style="font-size: 28px; font-weight: 800"><span data-calc="n">10</span></span></label>
-        <input id="emp-range" type="range" min="1" max="150" step="1" value="10" style="width: 100%; min-height: 44px; accent-color: #0f5c55">
-        <div style="display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; border-radius: 14px; background: #ffffff">
-          <span style="color: #4a5754">Mensualidad</span><strong style="font-size: 20px"><span data-calc="monthly"></span></strong>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: 14px; background: #ffffff; border: 2px solid #e9b949">
-          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: baseline"><span style="color: #4a5754">Pago anual <strong style="color: #6b4e08">(-10%)</strong></span><strong style="font-size: 20px"><span data-calc="annual"></span></strong></div>
-          <span style="font-size: 13px; color: #6b4e08; font-weight: 700">Ahorras <span data-calc="annualSave"></span> al año</span>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 14px; background: #ffffff">
-          <span style="font-weight: 700">Tu primer año</span>
-          <div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #4a5754">Pagando mes a mes</span><strong><span data-calc="firstYear"></span></strong></div>
-          <div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #4a5754">Pagando el año completo</span><strong style="color: #0f5c55"><span data-calc="firstYearAnnual"></span></strong></div>
-        </div>
-        <p style="margin: 0; font-size: 12px; color: #4a5754">Primer año: $599 de implementación (incluye el primer mes) más los 11 meses restantes. Pago anual: 12 mensualidades con 10% de descuento. IVA no incluido.</p>
-        <a id="buy-calc" href="#" style="display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; border-radius: 14px; background: #1f7a46; color: #ffffff; text-decoration: none; font-weight: 800; font-size: 17px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"></path></svg>
-          Comprar para <span data-calc="n">10</span> empleados
-        </a>
-      </div>
+        <a class="btn btn-light btn-lg" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">Comprar</a>
+      </article>
+      <article class="price-card">
+        <p class="label">Desde el segundo mes</p>
+        <p class="price">$19 <small>por empleado al mes</small></p>
+        <p class="tax">IVA no incluido</p>
+        <p style="font-weight:700;color:var(--navy)">Todas las funciones incluidas</p>
+        <p style="color:var(--muted);font-size:15px">QR, huella o Face ID, cálculo de retardos y horas extra, home office, avisos por WhatsApp y reportes para nómina.</p>
+        <span class="badge">10% de descuento al pagar el año completo</span>
+      </article>
+      <article class="price-card" aria-labelledby="t-calc">
+        <p class="label" id="t-calc">Calcula tu costo</p>
+        <label class="calc-label" for="emp-range">Empleados <output id="emp-out" class="tabular" for="emp-range">10</output></label>
+        <input id="emp-range" type="range" min="1" max="150" step="1" value="10">
+        <div class="calc-row"><span>Mensualidad</span><strong class="tabular" data-calc="monthly"></strong></div>
+        <div class="calc-row save"><span>Pago anual (-10%)</span><strong class="tabular" data-calc="annual"></strong><em>Ahorras <span data-calc="annualSave"></span> al año</em></div>
+        <div class="calc-row"><span>Tu primer año, mes a mes</span><strong class="tabular" data-calc="firstYear"></strong></div>
+        <div class="calc-row"><span>Tu primer año, pago anual</span><strong class="tabular" style="color:var(--primary-dark)" data-calc="firstYearAnnual"></strong></div>
+        <p class="fine">Primer año: $599 de implementación (incluye el primer mes) más los 11 meses restantes. Pago anual: 12 mensualidades con 10% de descuento. IVA no incluido.</p>
+        <a class="btn btn-wa btn-lg" id="buy-calc" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">Comprar para <span data-calc="n">10</span> empleados</a>
+      </article>
     </div>
-    <p style="margin: 0; font-size: 13px; color: #4a5754">Precios en pesos mexicanos. IVA no incluido.</p>
+    <p class="fine" style="margin-top:16px">Precios en pesos mexicanos. IVA no incluido.</p>
   </div>
 </section>
 
-<!-- SEGURIDAD -->
-<section style="max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
-  <div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 12px">
-    <p style="margin: 0; color: #0f5c55; font-weight: 800; font-size: 15px">SEGURIDAD</p>
-    <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; letter-spacing: -1px">Sin trampas y con tus datos protegidos</h2>
-  </div>
-  <ul style="flex: 1 1 480px; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px; font-size: 17px">
-    <li style="display: flex; gap: 12px"><strong style="color: #0f5c55">Nadie checa por otro.</strong> La huella o Face ID confirma que es la misma persona.</li>
-    <li style="display: flex; gap: 12px"><strong style="color: #0f5c55">La hora la pone el servidor.</strong> Cambiar la hora del celular no sirve de nada.</li>
-    <li style="display: flex; gap: 12px"><strong style="color: #0f5c55">No guardamos huellas ni rostros.</strong> La biometría se queda dentro del celular del empleado.</li>
-    <li style="display: flex; gap: 12px"><strong style="color: #0f5c55">Cada empresa ve solo lo suyo.</strong> Y cada corrección queda registrada en una bitácora.</li>
-  </ul>
-</section>
-
-<!-- PREGUNTAS -->
-<section id="preguntas" style="background: #ffffff; border-top: 1px solid #d9e1de">
-  <div style="max-width: 860px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; gap: 24px">
-    <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; letter-spacing: -1px">Preguntas frecuentes</h2>
-    
-      <details style="border-bottom: 1px solid #d9e1de; padding: 18px 0">
-        <summary style="font-size: 19px; font-weight: 800; min-height: 44px; display: flex; align-items: center">¿Necesito comprar un reloj checador?</summary>
-        <p style="margin: 8px 0 0; color: #4a5754; font-size: 17px">No. Tus empleados usan su propio celular y tú imprimes el QR de cada sucursal en una hoja.</p>
-      </details>
-    
-      <details style="border-bottom: 1px solid #d9e1de; padding: 18px 0">
-        <summary style="font-size: 19px; font-weight: 800; min-height: 44px; display: flex; align-items: center">¿Sirve si tengo pocos empleados?</summary>
-        <p style="margin: 8px 0 0; color: #4a5754; font-size: 17px">Sí. Pagas $19 al mes por cada empleado, así que funciona igual para un negocio de 2 personas que para una empresa con cientos.</p>
-      </details>
-    
-      <details style="border-bottom: 1px solid #d9e1de; padding: 18px 0">
-        <summary style="font-size: 19px; font-weight: 800; min-height: 44px; display: flex; align-items: center">¿Guardan la huella de mis empleados?</summary>
-        <p style="margin: 8px 0 0; color: #4a5754; font-size: 17px">No. La huella o el rostro nunca salen del celular; el sistema solo recibe una confirmación cifrada.</p>
-      </details>
-    
-      <details style="border-bottom: 1px solid #d9e1de; padding: 18px 0">
-        <summary style="font-size: 19px; font-weight: 800; min-height: 44px; display: flex; align-items: center">¿Funciona en iPhone y Android?</summary>
-        <p style="margin: 8px 0 0; color: #4a5754; font-size: 17px">Sí. Se abre desde el navegador y se puede instalar en la pantalla de inicio como una app.</p>
-      </details>
-    
-      <details style="border-bottom: 1px solid #d9e1de; padding: 18px 0">
-        <summary style="font-size: 19px; font-weight: 800; min-height: 44px; display: flex; align-items: center">¿Qué pasa si no hay internet?</summary>
-        <p style="margin: 8px 0 0; color: #4a5754; font-size: 17px">Para proteger tus registros, las checadas se hacen con conexión. La app avisa claramente cuando no hay internet.</p>
-      </details>
-    
-      <details style="border-bottom: 1px solid #d9e1de; padding: 18px 0">
-        <summary style="font-size: 19px; font-weight: 800; min-height: 44px; display: flex; align-items: center">¿Puedo tener varias sucursales?</summary>
-        <p style="margin: 8px 0 0; color: #4a5754; font-size: 17px">Sí. Cada sucursal tiene su QR y ves todo en un solo panel, con filtros por sucursal y departamento.</p>
-      </details>
-    
-      <details style="border-bottom: 1px solid #d9e1de; padding: 18px 0">
-        <summary style="font-size: 19px; font-weight: 800; min-height: 44px; display: flex; align-items: center">¿Qué incluye la implementación de $599?</summary>
-        <p style="margin: 8px 0 0; color: #4a5754; font-size: 17px">Configuramos tu empresa, sucursales y horarios, te entregamos tu QR para imprimir, damos de alta a tu equipo y hacemos juntos la primera checada. Incluye tu primer mes de uso.</p>
-      </details>
-    
-      <details style="border-bottom: 1px solid #d9e1de; padding: 18px 0">
-        <summary style="font-size: 19px; font-weight: 800; min-height: 44px; display: flex; align-items: center">¿Cuánto pago después del primer mes?</summary>
-        <p style="margin: 8px 0 0; color: #4a5754; font-size: 17px">$19 al mes por cada empleado activo, más IVA. Si pagas el año completo obtienes 10% de descuento. Si das de baja a alguien, dejas de pagar por esa persona.</p>
-      </details>
-    
-  </div>
-</section>
-
-<!-- CTA FINAL -->
-<section style="background: #0a3f3b; color: #ffffff">
-  <div style="max-width: 1000px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px">
-    <h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.05">Empieza este mes por $599</h2>
-    <p style="margin: 0; font-size: 19px; opacity: 0.9; max-width: 620px">Incluye la implementación y tu primer mes de uso. Después, solo $19 por empleado al mes, o 10% menos pagando el año completo.</p>
-    <p style="margin: -8px 0 0; font-size: 12px; opacity: 0.75">IVA no incluido.</p>
-    <a href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20ControlaCheck." style="margin-top: 12px; display: inline-flex; align-items: center; gap: 10px; min-height: 60px; padding: 0 32px; border-radius: 999px; background: #e9b949; color: #16211f; text-decoration: none; font-weight: 800; font-size: 19px">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"></path></svg>
-      Comprar por WhatsApp
-    </a>
-    <p style="margin: 0; font-size: 15px; opacity: 0.8">Te ayudamos a dejarlo funcionando desde el primer día.</p>
-  </div>
-</section>
-
-<!-- PIE -->
-<footer style="background: #072f2c; color: #c9d8d4">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: flex; flex-direction: column; gap: 14px; font-size: 14px">
-    <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center">
-      <p style="margin: 0"><strong style="color: #ffffff">ControlaCheck™</strong>. Control de asistencia para negocios en México.</p>
-      <div style="display: flex; flex-wrap: wrap; gap: 20px">
-        <a href="aviso-de-privacidad.html" style="color: #c9d8d4">Aviso de privacidad</a>
-        <a href="terminos.html" style="color: #c9d8d4">Términos y condiciones</a>
-        <a href="mailto:ventasrlogistica@gmail.com" style="color: #c9d8d4">ventasrlogistica@gmail.com</a>
-      </div>
+<!-- ==================== Seguridad ==================== -->
+<section class="section alt" aria-labelledby="t-seg">
+  <div class="wrap security">
+    <div class="section-head" style="margin:0">
+      <p class="kicker">Seguridad</p>
+      <h2 id="t-seg">Sin trampas y con tus datos protegidos</h2>
     </div>
-    <p style="margin: 0; font-size: 13px; color: #9fb5b0">© 2026 ControlaCheck™. Todos los derechos reservados. Precios en pesos mexicanos, IVA no incluido.</p>
+    <ul class="checks">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><span><strong>Nadie checa por otro.</strong> La huella o Face ID confirma que es la misma persona.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><span><strong>La hora la pone el servidor.</strong> Cambiar la hora del celular no sirve de nada.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><span><strong>No guardamos huellas ni rostros.</strong> La biometría se queda dentro del celular del empleado.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><span><strong>Cada empresa ve solo lo suyo.</strong> Y cada corrección queda registrada en una bitácora.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== Preguntas ==================== -->
+<section class="section" id="preguntas" aria-labelledby="t-faq">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Preguntas frecuentes</p>
+      <h2 id="t-faq">Resolvemos tus dudas</h2>
+    </div>
+    <div class="faq">
+      <details><summary>¿Necesito comprar un reloj checador?</summary><p>No. Tus empleados usan su propio celular y tú imprimes el QR de cada sucursal en una hoja.</p></details>
+      <details><summary>¿Sirve si tengo pocos empleados?</summary><p>Sí. Pagas $19 al mes por cada empleado, así que funciona igual para un negocio de 2 personas que para una empresa con cientos.</p></details>
+      <details><summary>¿Guardan la huella de mis empleados?</summary><p>No. La huella o el rostro nunca salen del celular; el sistema solo recibe una confirmación cifrada.</p></details>
+      <details><summary>¿Funciona en iPhone y Android?</summary><p>Sí. Se abre desde el navegador y se puede instalar en la pantalla de inicio como una app.</p></details>
+      <details><summary>¿Qué pasa si no hay internet?</summary><p>Para proteger tus registros, las checadas se hacen con conexión. La app avisa claramente cuando no hay internet.</p></details>
+      <details><summary>¿Puedo tener varias sucursales?</summary><p>Sí. Cada sucursal tiene su QR y ves todo en un solo panel, con filtros por sucursal y departamento.</p></details>
+      <details><summary>¿Qué incluye la implementación de $599?</summary><p>Configuramos tu empresa, sucursales y horarios, te entregamos tu QR para imprimir, damos de alta a tu equipo y hacemos juntos la primera checada. Incluye tu primer mes de uso.</p></details>
+      <details><summary>¿Cuánto pago después del primer mes?</summary><p>$19 al mes por cada empleado activo, más IVA. Si pagas el año completo obtienes 10% de descuento. Si das de baja a alguien, dejas de pagar por esa persona.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Cierre ==================== -->
+<section class="section cta" aria-labelledby="t-cta">
+  <div class="wrap">
+    <h2 id="t-cta">Empieza este mes por $599</h2>
+    <p>Incluye la implementación y tu primer mes de uso. Después, solo $19 por empleado al mes, o 10% menos pagando el año completo.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-wa btn-lg" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
+        Comprar por WhatsApp
+      </a>
+      <button type="button" class="btn btn-secondary btn-lg" data-open-info>Más información</button>
+    </div>
+    <p class="fine">IVA no incluido. Te ayudamos a dejarlo funcionando desde el primer día.</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p><strong style="color:#fff">Controlacheck-RL™</strong>. Control de asistencia para negocios en México.</p>
+    <nav aria-label="Legal y contacto">
+      <a href="aviso-de-privacidad.html">Aviso de privacidad</a>
+      <a href="terminos.html">Términos y condiciones</a>
+      <a href="mailto:ventasrlogistica@gmail.com">ventasrlogistica@gmail.com</a>
+    </nav>
+    <p style="flex-basis:100%;font-size:13px;color:#93a3b3">© <span id="year">2026</span> Controlacheck-RL™. Todos los derechos reservados. Precios en pesos mexicanos, IVA no incluido.</p>
   </div>
 </footer>
 
-<!-- BOTÓN FLOTANTE DE COMPRA -->
-<a id="float-buy" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20ControlaCheck." aria-label="Comprar ControlaCheck por WhatsApp" style="position: fixed; right: 20px; bottom: 20px; z-index: 50; display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 22px; border-radius: 999px; background: #1f7a46; color: #ffffff; text-decoration: none; font-weight: 800; font-size: 17px; box-shadow: 0 12px 28px -8px rgba(10,63,59,0.55)">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"></path></svg>
+<a class="btn btn-wa float-buy" id="float-buy" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener" aria-label="Comprar Controlacheck-RL por WhatsApp" tabindex="-1" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
   Comprar
 </a>
 
-</div>
+<!-- ==================== Ventana: Más información ==================== -->
+<dialog class="info" id="info" aria-labelledby="info-title">
+  <div class="info-head">
+    <div>
+      <h2 id="info-title">Más información</h2>
+      <p>Déjanos tus datos y continúa la conversación con nosotros por WhatsApp.</p>
+    </div>
+    <button type="button" class="close-btn" data-close-info aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <form id="info-form" novalidate>
+    <div class="field">
+      <label for="f-name">Nombre y apellidos</label>
+      <input id="f-name" name="name" type="text" autocomplete="name" maxlength="120" required placeholder="Ej. Ana López García">
+    </div>
+    <div class="field">
+      <label for="f-phone">Número de celular</label>
+      <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" required placeholder="10 dígitos, ej. 492 123 4567">
+    </div>
+    <div class="field">
+      <label for="f-email">Correo electrónico</label>
+      <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" required placeholder="nombre@empresa.mx">
+    </div>
+    <div class="hp" aria-hidden="true">
+      <label for="f-website">No llenes este campo</label>
+      <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <label class="consent">
+      <input id="f-consent" name="consent" type="checkbox" required>
+      <span>He leído y acepto el <a href="aviso-de-privacidad.html" target="_blank" rel="noopener">Aviso de Privacidad</a>.</span>
+    </label>
+    <p class="form-msg" id="form-msg" role="alert" hidden></p>
+    <button type="submit" class="btn btn-wa btn-lg" id="f-submit">Enviar y abrir WhatsApp</button>
+  </form>
+  <div class="done" id="info-done" hidden>
+    <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></div>
+    <h3 id="done-title">¡Gracias!</h3>
+    <p id="done-text">Recibimos tus datos. Te contactaremos muy pronto.</p>
+    <a class="btn btn-wa btn-lg" id="done-wa" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">Escribir por WhatsApp ahora</a>
+    <button type="button" class="btn btn-secondary" data-close-info>Cerrar</button>
+  </div>
+</dialog>
 
 <script>
 (function () {
+  "use strict";
   var WA = "524921321473";
+  var SUPABASE_URL = "https://cldrfqmvotxwbcejttii.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_qvbtcbMfNx2Whq6ANj-qqQ_bUwKKyHh";
+  var waLink = function (msg) { return "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg); };
+  document.getElementById("year").textContent = String(new Date().getFullYear());
+
+  /* ----- Menú móvil ----- */
+  var header = document.querySelector(".header");
+  var menuBtn = document.querySelector(".menu-btn");
+  function setMenu(open) {
+    header.classList.toggle("open", open);
+    menuBtn.setAttribute("aria-expanded", String(open));
+    menuBtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    menuBtn.querySelector(".i-open").style.display = open ? "none" : "";
+    menuBtn.querySelector(".i-close").style.display = open ? "" : "none";
+  }
+  menuBtn.addEventListener("click", function () { setMenu(!header.classList.contains("open")); });
+  document.querySelectorAll("#menu-movil a, #menu-movil button").forEach(function (el) { el.addEventListener("click", function () { setMenu(false); }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
+
+  /* ----- Calculadora ----- */
   var range = document.getElementById("emp-range");
+  var out = document.getElementById("emp-out");
   var money = function (v) { return "$" + Math.round(v).toLocaleString("es-MX") + " MXN"; };
-  function update() {
+  function calc() {
     var n = Math.max(1, Math.min(150, Number(range.value) || 1));
     var vals = { n: n, monthly: money(n * 19), annual: money(n * 19 * 12 * 0.9), annualSave: money(n * 19 * 12 * 0.1),
-                 firstYear: money(599 + 11 * n * 19), firstYearAnnual: money(599 + 11 * n * 19 * 0.9) };
+      firstYear: money(599 + 11 * n * 19), firstYearAnnual: money(599 + 11 * n * 19 * 0.9) };
+    out.textContent = String(n);
     document.querySelectorAll("[data-calc]").forEach(function (el) { el.textContent = vals[el.getAttribute("data-calc")]; });
-    var msg = "Hola, quiero comprar ControlaCheck para " + n + " empleados. Implementación $599 y mensualidad de " + money(n * 19) + " + IVA.";
-    document.getElementById("buy-calc").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
+    document.getElementById("buy-calc").href = waLink("Hola, quiero comprar Controlacheck-RL para " + n + " empleados. Implementación $599 y mensualidad de " + money(n * 19) + " + IVA.");
   }
-  range.addEventListener("input", update);
-  update();
-})();
-</script>
-<script>
-(function () {
-  var f = document.getElementById("float-buy");
-  if (!f) return;
-  f.style.transition = "opacity .25s, transform .25s";
-  function check() {
-    var show = window.scrollY > 520;
-    f.style.opacity = show ? "1" : "0";
-    f.style.transform = show ? "none" : "translateY(16px)";
-    f.style.pointerEvents = show ? "auto" : "none";
-    f.setAttribute("aria-hidden", show ? "false" : "true");
-    f.tabIndex = show ? 0 : -1;
+  range.addEventListener("input", calc);
+  calc();
+
+  /* ----- Botón flotante: aparece al bajar ----- */
+  var fb = document.getElementById("float-buy");
+  function floatCheck() {
+    var show = window.scrollY > 640;
+    fb.classList.toggle("show", show);
+    fb.setAttribute("aria-hidden", show ? "false" : "true");
+    fb.tabIndex = show ? 0 : -1;
   }
-  window.addEventListener("scroll", check, { passive: true });
-  check();
+  window.addEventListener("scroll", floatCheck, { passive: true });
+  floatCheck();
+
+  /* ----- Ventana "Más información" ----- */
+  var dlg = document.getElementById("info");
+  var form = document.getElementById("info-form");
+  var msg = document.getElementById("form-msg");
+  var submit = document.getElementById("f-submit");
+  var done = document.getElementById("info-done");
+  var opener = null;
+  function openInfo(e) {
+    opener = e && e.currentTarget;
+    form.hidden = false; done.hidden = true; msg.hidden = true; document.getElementById("done-wa").textContent = "Escribir por WhatsApp ahora";
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+    setTimeout(function () { document.getElementById("f-name").focus(); }, 30);
+  }
+  function closeInfo() { if (dlg.open) dlg.close(); if (opener) opener.focus(); }
+  document.querySelectorAll("[data-open-info]").forEach(function (b) { b.addEventListener("click", openInfo); });
+  document.querySelectorAll("[data-close-info]").forEach(function (b) { b.addEventListener("click", closeInfo); });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) closeInfo(); });
+
+  function normPhone(raw) {
+    var d = String(raw || "").replace(/\D/g, "");
+    if (d.indexOf("00") === 0) d = d.slice(2);
+    if (d.length === 13 && d.indexOf("521") === 0) d = "52" + d.slice(3);
+    if (d.length === 10) d = "52" + d;
+    return /^52\d{10}$/.test(d) ? d : null;
+  }
+  function showError(text, fieldId) {
+    msg.textContent = text; msg.hidden = false;
+    form.querySelectorAll("input").forEach(function (i) { i.removeAttribute("aria-invalid"); });
+    if (fieldId) { var f = document.getElementById(fieldId); f.setAttribute("aria-invalid", "true"); f.focus(); }
+  }
+  function utm(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = document.getElementById("f-name").value.trim().replace(/\s+/g, " ");
+    var phone = normPhone(document.getElementById("f-phone").value);
+    var email = document.getElementById("f-email").value.trim().toLowerCase();
+    var consent = document.getElementById("f-consent").checked;
+    if (name.length < 3 || name.indexOf(" ") === -1) return showError("Escribe tu nombre y apellidos.", "f-name");
+    if (!phone) return showError("Escribe tu número de celular a 10 dígitos.", "f-phone");
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showError("Revisa tu correo electrónico.", "f-email");
+    if (!consent) return showError("Para continuar, acepta el Aviso de Privacidad.", "f-consent");
+
+    msg.hidden = true; submit.disabled = true; submit.textContent = "Enviando…";
+    function goToWhatsApp(title) {
+      var link = waLink(waMsg);
+      document.getElementById("done-title").textContent = title;
+      document.getElementById("done-text").textContent = "Abriendo WhatsApp con tus datos. Solo presiona enviar y te atendemos enseguida.";
+      var btn = document.getElementById("done-wa");
+      btn.href = link; btn.textContent = "Abrir WhatsApp";
+      form.hidden = true; done.hidden = false; form.reset();
+      setTimeout(function () { window.location.href = link; }, 900);
+    }
+    var first = name.split(" ")[0];
+    var waMsg = "Hola, quiero más información de Controlacheck-RL.\n\nNombre: " + name + "\nCelular: " + phone.slice(2) + "\nCorreo: " + email;
+    var payload = { p_full_name: name, p_phone: phone, p_email: email, p_consent: true,
+      p_website: document.getElementById("f-website").value, p_source: "landing",
+      p_utm_source: utm("utm_source"), p_utm_medium: utm("utm_medium"), p_utm_campaign: utm("utm_campaign") };
+
+    fetch(SUPABASE_URL + "/rest/v1/rpc/submit_lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { if (!r.ok) throw new Error("http " + r.status); return r.json(); })
+      .then(function (res) {
+        if (res && res.ok) {
+          if (window.va) window.va("event", { name: "lead" });
+          goToWhatsApp("¡Gracias, " + first + "!");
+        } else {
+          showError((res && res.message) || "No pudimos enviar tus datos. Intenta de nuevo.");
+        }
+      })
+      .catch(function () {
+        // Si falla la conexión, igual lo mandamos a WhatsApp: no perdemos al interesado
+        goToWhatsApp("Casi listo, " + first);
+      })
+      .then(function () { submit.disabled = false; submit.textContent = "Enviar y abrir WhatsApp"; });
+  });
 })();
 </script>
 </body>
