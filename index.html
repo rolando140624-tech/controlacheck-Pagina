@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Controlacheck-RL: reloj checador desde el celular para tu negocio</title>
-<meta name="description" content="Tus empleados checan con QR y huella desde su celular. Tú ves retardos, faltas y horas extra en tiempo real. Implementación $599 MXN y $19 MXN por empleado al mes.">
+<meta name="description" content="Tus empleados checan con QR y huella desde su celular. Tú ves retardos, faltas y horas extra en tiempo real. Implementación $599 MXN y $20 MXN por empleado al mes.">
 <meta property="og:title" content="Controlacheck-RL: reloj checador desde el celular">
 <meta property="og:description" content="Tu equipo checa con su celular. Tú lo ves todo en tiempo real. Implementación $599 MXN con tu primer mes incluido.">
 <meta property="og:image" content="portada.jpg">
@@ -65,6 +65,9 @@ p { margin: 0; }
 .nav a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; padding: 8px 12px; border-radius: 8px; }
 .nav a:hover { background: var(--paper); color: var(--navy); }
 .header-actions { display: flex; align-items: center; gap: 8px; }
+.login-link { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; border-radius: 10px; color: var(--navy); font-weight: 600; font-size: 15px; text-decoration: none; white-space: nowrap; }
+.login-link:hover { background: var(--paper); color: var(--primary-dark); }
+.login-link svg { width: 18px; height: 18px; }
 .menu-btn { display: none; width: 44px; height: 44px; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; align-items: center; justify-content: center; cursor: pointer; color: var(--navy); }
 .menu-btn svg { width: 22px; height: 22px; }
 .mobile-menu { display: none; border-top: 1px solid var(--line); background: var(--surface); }
@@ -72,8 +75,8 @@ p { margin: 0; }
 .mobile-menu a.link { display: flex; align-items: center; min-height: 48px; color: var(--ink); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--line); }
 .mobile-menu .btn { margin-top: 12px; }
 .header.open .mobile-menu { display: block; }
-@media (max-width: 900px) {
-  .nav, .header-actions .btn-secondary { display: none; }
+@media (max-width: 1120px) {
+  .nav, .header-actions .btn-secondary, .header-actions .login-link { display: none; }
   .menu-btn { display: inline-flex; }
   .header-actions { margin-left: auto; }
 }
@@ -256,6 +259,10 @@ dialog.info::backdrop { background: rgb(11 31 51 / .55); }
       <a href="#preguntas">Preguntas</a>
     </nav>
     <div class="header-actions">
+      <a class="login-link" href="https://app.controlacheck-rl.com/login">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg>
+        Iniciar sesión
+      </a>
       <button type="button" class="btn btn-secondary btn-sm" data-open-info>Más información</button>
       <a class="btn btn-primary btn-sm" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">Comprar</a>
       <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir menú">
@@ -269,6 +276,7 @@ dialog.info::backdrop { background: rgb(11 31 51 / .55); }
       <a class="link" href="#funciones">Funciones</a>
       <a class="link" href="#precio">Precio</a>
       <a class="link" href="#preguntas">Preguntas</a>
+      <a class="link" href="https://app.controlacheck-rl.com/login">Iniciar sesión (clientes)</a>
       <button type="button" class="btn btn-secondary" data-open-info>Más información</button>
       <a class="btn btn-primary" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">Comprar</a>
     </nav>
@@ -290,7 +298,7 @@ dialog.info::backdrop { background: rgb(11 31 51 / .55); }
         </a>
         <button type="button" class="btn btn-secondary btn-lg" data-open-info>Más información</button>
       </div>
-      <p class="hero-note">Implementación de $599 MXN, pago único, con tu primer mes incluido. Después, $19 MXN por empleado al mes. <small>IVA no incluido.</small> <a href="#video">Ver el video de 38 segundos</a></p>
+      <p class="hero-note">Implementación de $599 MXN, pago único, con tu primer mes incluido. Después, $20 MXN por empleado al mes. <small>IVA no incluido.</small> <a href="#video">Ver el video de 38 segundos</a></p>
       <div class="trust" aria-label="Ventajas">
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Sin comprar aparatos</span>
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Android y iPhone</span>
@@ -411,7 +419,7 @@ dialog.info::backdrop { background: rgb(11 31 51 / .55); }
       </article>
       <article class="price-card">
         <p class="label">Desde el segundo mes</p>
-        <p class="price">$19 <small>MXN por empleado al mes</small></p>
+        <p class="price">$20 <small>MXN por empleado al mes</small></p>
         <p class="tax">IVA no incluido</p>
         <p style="font-weight:700;color:var(--navy)">Todas las funciones incluidas</p>
         <p style="color:var(--muted);font-size:15px">QR, huella o Face ID, cálculo de retardos y horas extra, home office, avisos por WhatsApp y reportes para nómina.</p>
@@ -458,13 +466,14 @@ dialog.info::backdrop { background: rgb(11 31 51 / .55); }
     </div>
     <div class="faq">
       <details><summary>¿Necesito comprar un reloj checador?</summary><p>No. Tus empleados usan su propio celular y tú imprimes el QR de cada sucursal en una hoja.</p></details>
-      <details><summary>¿Sirve si tengo pocos empleados?</summary><p>Sí. Pagas $19 MXN al mes por cada empleado, así que funciona igual para un negocio de 2 personas que para una empresa con cientos.</p></details>
+      <details><summary>¿Sirve si tengo pocos empleados?</summary><p>Sí. Pagas $20 MXN al mes por cada empleado, así que funciona igual para un negocio de 2 personas que para una empresa con cientos.</p></details>
       <details><summary>¿Guardan la huella de mis empleados?</summary><p>No. La huella o el rostro nunca salen del celular; el sistema solo recibe una confirmación cifrada.</p></details>
       <details><summary>¿Funciona en iPhone y Android?</summary><p>Sí. Se abre desde el navegador y se puede instalar en la pantalla de inicio como una app.</p></details>
       <details><summary>¿Qué pasa si no hay internet?</summary><p>Para proteger tus registros, las checadas se hacen con conexión. La app avisa claramente cuando no hay internet.</p></details>
       <details><summary>¿Puedo tener varias sucursales?</summary><p>Sí. Cada sucursal tiene su QR y ves todo en un solo panel, con filtros por sucursal y departamento.</p></details>
       <details><summary>¿Qué incluye la implementación de $599 MXN?</summary><p>Configuramos tu empresa, sucursales y horarios, te entregamos tu QR para imprimir, damos de alta a tu equipo y hacemos juntos la primera checada. Incluye tu primer mes de uso.</p></details>
-      <details><summary>¿Cuánto pago después del primer mes?</summary><p>$19 MXN al mes por cada empleado activo, más IVA. Si pagas el año completo obtienes 10% de descuento. Si das de baja a alguien, dejas de pagar por esa persona.</p></details>
+      <details><summary>¿Tienen soporte técnico?</summary><p>Sí. Si tienes una duda o algo no funciona, escríbenos por WhatsApp al 492 132 1473 o al correo ventasrlogistica@gmail.com y te ayudamos.</p></details>
+      <details><summary>¿Cuánto pago después del primer mes?</summary><p>$20 MXN al mes por cada empleado activo, más IVA. Si pagas el año completo obtienes 10% de descuento. Si das de baja a alguien, dejas de pagar por esa persona.</p></details>
     </div>
   </div>
 </section>
@@ -473,7 +482,7 @@ dialog.info::backdrop { background: rgb(11 31 51 / .55); }
 <section class="section cta" aria-labelledby="t-cta">
   <div class="wrap">
     <h2 id="t-cta">Empieza este mes por $599 MXN</h2>
-    <p>Incluye la implementación y tu primer mes de uso. Después, solo $19 MXN por empleado al mes, o 10% menos pagando el año completo.</p>
+    <p>Incluye la implementación y tu primer mes de uso. Después, solo $20 MXN por empleado al mes, o 10% menos pagando el año completo.</p>
     <div class="hero-ctas">
       <a class="btn btn-wa btn-lg" href="https://wa.me/524921321473?text=Hola%2C%20quiero%20comprar%20Controlacheck-RL." target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
@@ -490,8 +499,11 @@ dialog.info::backdrop { background: rgb(11 31 51 / .55); }
   <div class="wrap">
     <p><strong style="color:#fff">Controlacheck-RL™</strong>. Control de asistencia para negocios en México.</p>
     <nav aria-label="Legal y contacto">
+      <a href="https://app.controlacheck-rl.com/login">Iniciar sesión</a>
       <a href="aviso-de-privacidad.html">Aviso de privacidad</a>
       <a href="terminos.html">Términos y condiciones</a>
+      <a href="proteccion-de-datos.html">Protección de datos</a>
+      <a href="https://wa.me/524921321473?text=Hola%2C%20necesito%20soporte%20t%C3%A9cnico%20de%20Controlacheck-RL." target="_blank" rel="noopener">Soporte técnico</a>
       <a href="mailto:ventasrlogistica@gmail.com">ventasrlogistica@gmail.com</a>
     </nav>
     <p style="flex-basis:100%;font-size:13px;color:#93a3b3">© <span id="year">2026</span> Controlacheck-RL™. Todos los derechos reservados. Precios en pesos mexicanos, IVA no incluido.</p>
@@ -576,11 +588,11 @@ dialog.info::backdrop { background: rgb(11 31 51 / .55); }
   var money = function (v) { return "$" + Math.round(v).toLocaleString("es-MX") + " MXN"; };
   function calc() {
     var n = Math.max(1, Math.min(150, Number(range.value) || 1));
-    var vals = { n: n, monthly: money(n * 19), annual: money(n * 19 * 12 * 0.9), annualSave: money(n * 19 * 12 * 0.1),
-      firstYear: money(599 + 11 * n * 19), firstYearAnnual: money(599 + 11 * n * 19 * 0.9) };
+    var vals = { n: n, monthly: money(n * 20), annual: money(n * 20 * 12 * 0.9), annualSave: money(n * 20 * 12 * 0.1),
+      firstYear: money(599 + 11 * n * 20), firstYearAnnual: money(599 + 11 * n * 20 * 0.9) };
     out.textContent = String(n);
     document.querySelectorAll("[data-calc]").forEach(function (el) { el.textContent = vals[el.getAttribute("data-calc")]; });
-    document.getElementById("buy-calc").href = waLink("Hola, quiero comprar Controlacheck-RL para " + n + " empleados. Implementación $599 MXN y mensualidad de " + money(n * 19) + " + IVA.");
+    document.getElementById("buy-calc").href = waLink("Hola, quiero comprar Controlacheck-RL para " + n + " empleados. Implementación $599 MXN y mensualidad de " + money(n * 20) + " + IVA.");
   }
   range.addEventListener("input", calc);
   calc();
